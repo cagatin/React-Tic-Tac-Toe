@@ -4,38 +4,17 @@ import './index.css';
 
 // Square Component - Renders a single <button>
 class Square extends React.Component {
-    /* In order for a Square to 'Remember' that it was clicked and to add an X to it, we utilize a state.
-     * React components can have a state by setting 'this.state' in their constructors.
-     *  
-     */
-    constructor(props) {  // We create a constructor to initialize the state
-        super(props);     // we call super(props) because Square is a sublcass of the Component class. 
-        this.state = {
-            value: null
-        };
-    }
 
     render() {
         return (
-            /* Props --> propertys (parameter of a component)
-             * since the Square component looks like so: <Square value={i}>,
-             * we access the value via --> this.props.value!
-             */
-            <button className="square"
-                /* Add an event listener to the button which SETS THE STATE (changes the value of the button) to X when clicked.
-                 * 
-                 * By calling 'this.setState' from an onClick handler in the Square component's render method...
-                 * we tell react to re-render that Square whenever its <button> has been clicked.
-                 * 
-                 * After the update...
-                 * The Square's this.state.value will be equal to 'X'!
-                 * 
-                 * When we call setState in a Component...
-                 * React automatically updates the CHILD components inside of it too.
-                 */
-                onClick={() => this.setState({ value: 'X' })}
+            /* When a square is clicked...
+             * the onClick function provided by the PARENT Board component is called (this.handleClick(i))
+            */
+            <button
+                className="square"
+                onClick={() => this.props.onClick()}
             >
-                {this.state.value}
+                {this.props.value}
             </button>
         );
     }
@@ -68,7 +47,10 @@ class Board extends React.Component {
          * 
          * We will instruct each individual Square of its current value ('X', 'O', null).
          */
-        return <Square value={this.state.squares[i]} />;        //each Square will now recieve a 'value' prop that will either be 'X', 'O', or null.
+        return <Square
+            value={this.state.squares[i]}
+            onClick={() => this.handleClick(i)}     //add a function to update the state of the board when the square is clicked
+        />;        //each Square will now recieve a 'value' prop that will either be 'X', 'O', or null.
     }
 
     render() {
