@@ -4,12 +4,8 @@ import './index.css';
 
 // Square Component - Renders a single <button>
 class Square extends React.Component {
-
     render() {
         return (
-            /* When a square is clicked...
-             * the onClick function provided by the PARENT Board component is called (this.handleClick(i))
-            */
             <button
                 className="square"
                 onClick={() => this.props.onClick()}
@@ -22,35 +18,17 @@ class Square extends React.Component {
 
 // Board Component - Renders 9 Squares
 class Board extends React.Component {
-    /* Who is the winner?
-     * The best approach to determine a winner is to STORE the game's STATE in the PARENT Board component rather than the CHILD Square component.
-     * The Board component can tell each Square what to display by passing a prop! (Similar to passing a prop form Board to Square via <Square value={i}/> )
-     * 
-     * To collect data from multiple children...
-     * We need to DECLARE the SHARED STATE in their PARENT's component!
-     * 
-     * The PARENT component can pass the state back down to the CHILDREN by using PROPS!
-     *
-     * This keeps the CHILD components IN SYNC w/ each other and the parent comopennt.
-     */
-    constructor(props) {    // We add a constructor to the Board to initialize the state.
+    constructor(props) {
         super(props);
         this.state = {
-            squares: Array(9).fill(null),       //Creates an array of length 9 containing null values.
+            squares: Array(9).fill(null),
         }
     }
     renderSquare(i) {
-        /* Here, we call the Square Component to generate buttons
-         * We set the value of the button to equal i using the {} syntax.
-         * We are simply PASSING A PROP from a PARENT Board Component to the CHILD Square component.
-         * this is how information flows in React App! --> From parent to children. 
-         * 
-         * We will instruct each individual Square of its current value ('X', 'O', null).
-         */
         return <Square
             value={this.state.squares[i]}
-            onClick={() => this.handleClick(i)}     //add a function to update the state of the board when the square is clicked
-        />;        //each Square will now recieve a 'value' prop that will either be 'X', 'O', or null.
+            onClick={() => this.handleClick(i)}
+        />;
     }
 
     render() {
