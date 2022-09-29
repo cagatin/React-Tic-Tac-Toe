@@ -8,7 +8,7 @@ class Square extends React.Component {
         return (
             <button
                 className="square"
-                onClick={() => this.props.onClick()}
+                onClick={() => this.props.onClick()}    //calls Board's handleClick(i) method when clicked
             >
                 {this.props.value}
             </button>
@@ -24,10 +24,17 @@ class Board extends React.Component {
             squares: Array(9).fill(null),
         }
     }
+
+    handleClick(i) {
+        const squares = this.state.squares.slice();     //copy the squares array
+        squares[i] = 'X';                               //set selected index to 'X'
+        this.setState({ squares: squares });            //set the state on the board
+    }
+
     renderSquare(i) {
         return <Square
             value={this.state.squares[i]}
-            onClick={() => this.handleClick(i)}
+            onClick={() => this.handleClick(i)}     //pass the handleCLick method down to the Square prop;
         />;
     }
 
