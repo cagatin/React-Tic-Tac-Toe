@@ -2,18 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-// Square Component - Renders a single <button>
-class Square extends React.Component {
-    render() {
-        return (
-            <button
-                className="square"
-                onClick={() => this.props.onClick()}    //calls Board's handleClick(i) method when clicked
-            >
-                {this.props.value}
-            </button>
-        );
-    }
+// Square Component - Renders a single <button> (Controlled Component)
+function Square(props) {
+    return (
+        <button
+            className="square"
+            onClick={() => this.props.onClick()}    //calls Board's handleClick(i) method when clicked
+        >
+            {this.props.value}
+        </button>
+    );
 }
 
 // Board Component - Renders 9 Squares
