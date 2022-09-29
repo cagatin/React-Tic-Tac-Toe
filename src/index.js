@@ -25,9 +25,14 @@ class Board extends React.Component {
     }
 
     handleClick(i) {
-        const squares = this.state.squares.slice();     //copy the squares array
-        squares[i] = 'X';                               //set selected index to 'X'
-        this.setState({                                 //set the state on the board
+        const squares = this.state.squares.slice();         //copy the squares array
+
+        if (calculateWinner(squares) || squares[i]) {       //stop execution of the game is over
+            return;
+        }
+
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({                                     //set the state on the board
             squares: squares,
             xIsNext: !this.state.xIsNext
         });
@@ -47,7 +52,7 @@ class Board extends React.Component {
         if (winner) {
             status = 'Winner: ' + winner;
         } else {
-            status = 'Next Player :' + (this.state.xIsNext ? 'X' : 'O');
+            status = 'Next Player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
 
         return (
